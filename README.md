@@ -6,20 +6,23 @@ Given a list of channels this bot starts sending a <3 every `N` minutes ~~and re
 
 The bot also replies to some keywords.
 
+_To avoid spam the minimum interval between messages is set to 10 s._
+
 ### Get Environment Variables
 
 To start, you’ll need three environment variables:
 
-| _Variable_        | _Description_                                                                                                                                                                                                                                                                             |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BOT_USERNAME`    | The account (username) that the chatbot uses to send chat messages. This can be your Twitch account. Alternately, many developers choose to create a second Twitch account for their bot, so it's clear from whom the messages originate.                                                 |
-| `CHANNEL_LIST`    | The Twitch channel name list where you want to run the bot. _Separate channel names with a single space._                                                                                                                                                                                 |
-| `OAUTH_TOKEN`     | The token to authenticate your chatbot with Twitch's servers. Generate this with [https://twitchapps.com/tmi/](https://twitchapps.com/tmi/) (a Twitch community-driven wrapper around the Twitch API), while logged in to your chatbot account. The token will be an alphanumeric string. |
-| `TIMEOUT_SECONDS` | The interval in seconds between one message and another. _To avoid spam the minimum value is set to 30 ._                                                                                                                                                                                 |
-| `ON_START`        | The toggle that determines if the chatbot should start sending messages as soon as it is started. It is a boolean variable that accepts `true` or `false` values. Default is `false`.                                                                                                     |
-| `REPLIES`         | The toggle that activates the auto replies to certain keywords. It is a boolean variable that accepts `true` or `false` values. Default is `false`.                                                                                                                                       |
-| `MIN_INTERVAL`    | The minimum interval at witch the bot responds. _To avoid spam the minimum value is set to 30 s._                                                                                                                                                                                         |
-| `FRY_USERNAME`    | Fry username.                                                                                                                                                                                                                                                                             |
+| _Variable_       | _Description_                                                                                                                                                                                                                                                                             |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BOT_USERNAME`   | The account (username) that the chatbot uses to send chat messages. This can be your Twitch account. Alternately, many developers choose to create a second Twitch account for their bot, so it's clear from whom the messages originate.                                                 |
+| `OAUTH_TOKEN`    | The token to authenticate your chatbot with Twitch's servers. Generate this with [https://twitchapps.com/tmi/](https://twitchapps.com/tmi/) (a Twitch community-driven wrapper around the Twitch API), while logged in to your chatbot account. The token will be an alphanumeric string. |
+| `FRY_USERNAME`   | Fry username.                                                                                                                                                                                                                                                                             |
+| `CHANNEL_LIST`   | The Twitch channel name list where you want to run the bot. _Separate channel names with a single space._                                                                                                                                                                                 |
+| `MIN_INTERVAL`   | The minimum interval at witch the bot responds.                                                                                                                                                                                                                                           |
+| `HEART_INTERVAL` | The interval in seconds between one heart <3 and another.                                                                                                                                                                                                                                 |
+| `ON_START`       | The toggle that determines if the chatbot should start sending messages as soon as it is started. It is a boolean variable that accepts `true` or `false` values. Default is `false`.                                                                                                     |
+| `REPLIES`        | The toggle that activates the auto replies to certain keywords. It is a boolean variable that accepts `true` or `false` values. Default is `false`.                                                                                                                                       |
+| `COMMONPLACES`   | The toggle that sends random commonplaces every `x` seconds such that `HEART_INTERVAL < x < 2 * HEART_INTERVAL`. It is a boolean variable that accepts `true` or `false` values. Default is `false`.                                                                                      |
 
 ### Running the bot
 
@@ -39,4 +42,4 @@ To start, you’ll need three environment variables:
 
 #### Made with <3 by [m_tte63](https://twitch.tv/m_tte63/)
 
-Hours wasted on this project: `8`
+Hours wasted on this project: **11**

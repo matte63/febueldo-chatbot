@@ -1,12 +1,15 @@
 const tmi = require("tmi.js");
 
 const channels = process.env.CHANNEL_LIST.trim().split(" ");
-const seconds = parseInt(process.env.INTERVAL_SECONDS);
 const on_start = process.env.ON_START === "true";
 const replies = process.env.REPLIES === "true";
+const seconds = parseInt(process.env.HEART_INTERVAL);
 const min_interval = parseInt(process.env.MIN_INTERVAL);
-if (min_interval < 30) min_interval = 30;
+if (min_interval < 10) min_interval = 10;
 const reply_delay = 1000;
+const commonplaces = process.env.COMMONPLACES === "true";
+
+const data = require("./data.json");
 
 // Define configuration options
 const opts = {
@@ -141,6 +144,20 @@ function logMsg(target, context, msg, self) {
   );
 }
 
+function commonPlaces() {
+  for (let i = 0; i < channels.length; i++) {
+    let target = channels[i];
+    let sentence =
+      data.luoghi_comuni[
+        Math.floor(Math.random() * data.luoghi_comuni.length)
+      ] +
+      " " +
+      data.emotes[Math.floor(Math.random() * data.emotes.length)];
+    client.say(target, sentence);
+    console.log(`* Sent "${sentence}" in ${target}`);
+  }
+}
+
 // Called every time a message comes in
 function onMessageHandler(target, context, msg, self) {
   if (self) {
@@ -174,6 +191,8 @@ function onMessageHandler(target, context, msg, self) {
 function onConnectedHandler(addr, port) {
   console.log(`* Connected to ${addr}:${port}`);
 
+  console.log(`* Started in ${channels}`);
+
   console.log(`* Replies are ${replies ? "on" : "off"} s`);
 
   let s = min_interval;
@@ -183,10 +202,11 @@ function onConnectedHandler(addr, port) {
   } else {
     console.log(`* Delay is lower than 30 s, reverting to default.`);
   }
+  console.log(`* COMMONPLACES is set to ${commonplaces}`);
+  if (commonplaces)
+    setInterval(() => commonPlaces(), s * (Math.random() + 1) * 1000);
 
   console.log(`* ON_START is set to ${on_start}`);
-
   if (on_start) sendHeart();
-
   setInterval(() => sendHeart(), s * 1000);
 }
