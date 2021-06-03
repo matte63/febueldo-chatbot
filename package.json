@@ -1,6 +1,6 @@
 {
   "name": "febueldo-twitch-chatbot",
-  "version": "0.0.5",
+  "version": "0.1.2",
   "description": "A simple chatbot.",
   "main": "bot.js",
   "scripts": {

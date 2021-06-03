@@ -1,10 +1,10 @@
 # Febueldo
 
-Twitch chatbot that sends a heart <3 every 5 minutes.
-
 ## Overview
 
-Given a list of channels this bot starts sending a <3 every 5 minutes and replies to `ciao` with `ciao <3`.
+Given a list of channels this bot starts sending a <3 every `N` minutes ~~and replies to `ciao` with `ciao <3`.~~
+
+The bot also replies to some keywords.
 
 ### Get Environment Variables
 
@@ -15,8 +15,10 @@ To start, you’ll need three environment variables:
 | `BOT_USERNAME`    | The account (username) that the chatbot uses to send chat messages. This can be your Twitch account. Alternately, many developers choose to create a second Twitch account for their bot, so it's clear from whom the messages originate.                                                 |
 | `CHANNEL_LIST`    | The Twitch channel name list where you want to run the bot. _Separate channel names with a single space._                                                                                                                                                                                 |
 | `OAUTH_TOKEN`     | The token to authenticate your chatbot with Twitch's servers. Generate this with [https://twitchapps.com/tmi/](https://twitchapps.com/tmi/) (a Twitch community-driven wrapper around the Twitch API), while logged in to your chatbot account. The token will be an alphanumeric string. |
-| `TIMEOUT_SECONDS` | The interval in seconds between one message and another. _To avoid spam the minimum value is set to 30._                                                                                                                                                                                  |
+| `TIMEOUT_SECONDS` | The interval in seconds between one message and another. _To avoid spam the minimum value is set to 30 ._                                                                                                                                                                                 |
 | `ON_START`        | The toggle that determines if the chatbot should start sending messages as soon as it is started. It is a boolean variable that accepts `true` or `false` values.                                                                                                                         |
+| `MIN_INTERVAL`    | The minimum interval at witch the bot responds. _To avoid spam the minimum value is set to 30 s._                                                                                                                                                                                         |
+| `FRY_USERNAME`    | Fry username.                                                                                                                                                                                                                                                                             |
 
 ### Running the bot
 
@@ -30,13 +32,8 @@ To start, you’ll need three environment variables:
 
 5. Your chatbot is ready to run! Glitch automatically deploys & runs each version. View the status button to ensure there are no errors.
 
-6. Try the chatbot! Interact with your channels by trying the `ciao` command.
+6. Try the chatbot! ~~Interact with your channels by trying the `ciao` command.~~
 
 **Note**: This bot connects to the IRC network as a client and isn't designed to respond over HTTP. If you click "Show Live" you will see a simple "Hello World"
 
-## Next Steps
-
-- For a thorough understanding of Twitch chatbots and IRC, read the [Chatbots & IRC Guide](https://dev.twitch.tv/docs/irc/guide/) and the rest of the Twitch IRC documentation.
-- To authenticate your chatbot in a production setting, we recommend you [register your app](https://dev.twitch.tv/docs/authentication/#registration) (chatbot) and use the OAuth Authorization code flow. This enables you to authenticate programmatically. To learn more, read the [Apps & Authentication Guide](https://dev.twitch.tv/docs/authentication/).
-  Read [Chatbots & IRC documentation](https://dev.twitch.tv/docs/irc/guide/).
-- Reach out to [@twitchdev](https://twitter.com/twitchdev) or the [Twitch chatbot forum](https://discuss.dev.twitch.tv/c/chat) for help!
+#### Made with <3 by [m_tte63](https://twitch.tv/m_tte63/)
