@@ -3,6 +3,7 @@ const tmi = require("tmi.js");
 const channels = process.env.CHANNEL_LIST.trim().split(" ");
 const seconds = parseInt(process.env.INTERVAL_SECONDS);
 const on_start = process.env.ON_START === "true";
+const replies = process.env.REPLIES === "true";
 const min_interval = parseInt(process.env.MIN_INTERVAL);
 if (min_interval < 30) min_interval = 30;
 const reply_delay = 1000;
@@ -147,30 +148,33 @@ function onMessageHandler(target, context, msg, self) {
   } // Ignore messages from the bot
   sendFirstFry(target, context, msg, self);
   logMsg(target, context, msg, self);
-  let last_msg_date = 0;
-  if (last_bot_msg[target] !== undefined)
-    last_msg_date = last_bot_msg[target]["date"];
-  if (Date.now() - last_msg_date > min_interval * 1000) {
-    let rd = 0;
-    if (context["username"] === process.env.BOT_USERNAME) rd = reply_delay;
-    setTimeout(() => replyMsg(target, context, msg, self), rd);
-  } // Avoids spam even from BOT_USERNAME, default interval is set to 30 s
+  if (replies) {
+    let last_msg_date = 0;
+    if (last_bot_msg[target] !== undefined)
+      last_msg_date = last_bot_msg[target]["date"];
+    if (Date.now() - last_msg_date > min_interval * 1000) {
+      let rd = 0;
+      if (context["username"] === process.env.BOT_USERNAME) rd = reply_delay;
+      setTimeout(() => replyMsg(target, context, msg, self), rd);
+    } // Avoids spam even from BOT_USERNAME, default interval is set to 30 s
 
-  // There is no possible way to know if a message has been sent, this code may help
-  /* client
+    // There is no possible way to know if a message has been sent, this code may help
+    /* client
       .say(target, "message")
       .then((data) => {})
       .catch((err) => {
         console.log(`* Error: ${err}`);
       });
    */
-
+  }
   updateLastBotMsg(target, context, msg, self);
 }
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler(addr, port) {
   console.log(`* Connected to ${addr}:${port}`);
+
+  console.log(`* Replies are ${replies ? "on" : "off"} s`);
 
   let s = min_interval;
   if (seconds > min_interval) {
