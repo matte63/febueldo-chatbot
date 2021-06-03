@@ -105,20 +105,34 @@ function replyMsg(target, context, msg, self) {
   kiwi += kiwi_end[Math.floor(Math.random() * kiwi_end.length)];
 
   const replies = {
-    quiz: `la bellissima ${kiwi} LuvHearts`,
-    chiuiz: `non si dice chiuiz ma ${kiwi} LuvPeekL`,
-    raffa: `raffa <3`,
-    pollo: `polloooooooooo <3`,
-    kengrav: `clown HahaDoge`,
-    criseldia: `cri LuvBlondeR`,
-    alefry: `serviva qualcuno che parlasse della morfologia del territorio ligure quindi chi meglio di alefry LuvGift`,
-    whievil: `uievil <3`,
-    wildlotus: `PrideFlower`
+    quiz: [`la bellissima ${kiwi} LuvHearts`],
+    chiuiz: [
+      `non si dice chiuiz ma ${kiwi} LuvPeekL`,
+      `ma come chiuiz, non era ${kiwi} LuvPeekL`
+    ],
+    raffa: [`raffa <3`],
+    pollo: [`polloooooooooo <3`],
+    kengrav: [`clown HahaDoge`],
+    criseldia: [
+      `cri LuvBlondeR`,
+      `cricri <3`,
+      `la dolcissima cri <3`,
+      `crise <3`
+    ],
+    alefry: [
+      `serviva qualcuno che parlasse della morfologia del territorio ligure quindi chi meglio di alefry LuvGift`,
+      `oh sì, il signor fry, mi chiedevo se avesse mai giocato Ori GivePLZ`
+    ],
+    whievil: [`uievil <3`, `uieviiiiiil <3`],
+    wildlotus: [`PrideFlower`, `francyyy PrideFlower`]
   };
 
   for (const key in replies) {
     if (msg.includes(key)) {
-      client.say(target, replies[key]);
+      client.say(
+        target,
+        replies[key][Math.floor(Math.random() * replies[key].length)]
+      );
       console.log(`* Executed ${key} command in ${target}`);
     }
   }
