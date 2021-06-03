@@ -111,7 +111,7 @@ function replyMsg(target, context, msg, self) {
     pollo: `polloooooooooo <3`,
     kengrav: `clown HahaDoge`,
     criseldia: `cri LuvBlondeR`,
-    alefry: `serviva qualcuno che parlasse della morfologia del territorio ligure e chi meglio di alefry`,
+    alefry: `serviva qualcuno che parlasse della morfologia del territorio ligure quindi chi meglio di alefry LuvGift`,
     whievil: `uievil <3`,
     wildlotus: `PrideFlower`
   };
