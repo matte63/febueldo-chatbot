@@ -5,6 +5,7 @@ const seconds = parseInt(process.env.INTERVAL_SECONDS);
 const on_start = process.env.ON_START === "true";
 const min_interval = parseInt(process.env.MIN_INTERVAL);
 if (min_interval < 30) min_interval = 30;
+const reply_delay = 1000;
 
 // Define configuration options
 const opts = {
@@ -40,11 +41,7 @@ function updateLastBotMsg(target, context, msg, self) {
       date: Date.now()
     };
     let time = new Date(last_bot_msg[target]["date"]);
-    console.log(
-      `* Last message in ${target}: \"${
-        last_bot_msg[target]["message"]
-      }\", ${time.toUTCString()}`
-    );
+    //  console.log(`* Last message in ${target}: ${last_bot_msg[target]["message"]} [${time.toUTCString()}]`);
   }
 }
 
@@ -62,18 +59,16 @@ function sendFirstFry(target, context, msg, self) {
 
     let time = new Date(first_fry[target]["date"]);
     console.log(
-      `* First message: \"${
-        first_fry[target]["message"]
-      }\", ${time.toUTCString()}`
+      `* First message: ${first_fry[target]["message"]} [${time.toUTCString()}]`
     );
-    setTimeout(() => client.say(target, `notte fry`), 1000); // Replies `notte fry`
+
+    client.say(target, `notte fry`); // Replies `notte fry`
   }
 }
 
 // Reply to a specific message
 function replyMsg(target, context, msg, self) {
   // Remove whitespace from chat message
-  const msg_ = msg.trim();
 
   // If the command is known, let's execute it
   /* switch (commandName) {
@@ -86,48 +81,29 @@ function replyMsg(target, context, msg, self) {
       console.log(`* Unknown command ${commandName}`);
   } */
 
-  msg = msg.toLowerCase();
+  msg = msg.trim().toLowerCase();
 
-  let kiwi_start = [
-    "chi",
-    "chiu",
-    "cu",
-    "cui",
-    "ki",
-    "kiw",
-    "kui",
-    "kwi",
-    "ku",
-    "qu",
-    "qui"
-  ]; // Chiuiz name start
-  let kiwi_end = [
-    "wi",
-    "wiz",
-    "uiz",
-    "uz",
-    "iz",
-    "ii",
-    "iuiuz",
-    "uiuiz",
-    "iuz",
-    "iiz",
-    "i",
-    "u",
-    "w",
-    "z"
-  ]; // Chiuiz name end
+  let kiwi_start = ["chi", "c", "k", "qu"]; // Chiuiz start chars
+  let kiwi_mid = ["i", "u", "w"]; // Chiuiz mid chars
+  let kiwi_end = ["z", ""]; // Chiuiz end chars
 
-  var kiwi = ""; // Chiuiz name alternatives
+  // Chiuiz name build
+  var kiwi = "";
 
-  kiwi =
-    kiwi_start[Math.floor(Math.random() * kiwi_start.length)] +
-    kiwi_end[Math.floor(Math.random() * kiwi_end.length)]; // Chiuiz name alternatives build
+  kiwi = kiwi_start[Math.floor(Math.random() * kiwi_start.length)];
+
+  let kiwi_length = 1 + Math.floor(Math.random() * 7);
+
+  for (var i = 0; i <= kiwi_length; i++) {
+    kiwi += kiwi_mid[Math.floor(Math.random() * kiwi_mid.length)];
+  }
+
+  kiwi += kiwi_end[Math.floor(Math.random() * kiwi_end.length)];
 
   const replies = {
     quiz: `la bellissima ${kiwi} LuvHearts`,
     chiuiz: `non si dice chiuiz ma ${kiwi} LuvPeekL`,
-    raffa: `raffaaaaaaaaaa <3`,
+    raffa: `raffa <3`,
     pollo: `polloooooooooo <3`,
     kengrav: `clown HahaDoge`,
     criseldia: `cri LuvBlondeR`,
@@ -136,20 +112,12 @@ function replyMsg(target, context, msg, self) {
     wildlotus: `PrideFlower`
   };
 
-  let found_reply_key = false;
-
   for (const key in replies) {
     if (msg.includes(key)) {
       client.say(target, replies[key]);
       console.log(`* Executed ${key} command in ${target}`);
-      found_reply_key = true;
     }
   }
-
-  if (!found_reply_key)
-    console.log(
-      `* Unknown command in ${target} from ${context["username"]}: ${msg_}`
-    );
 
   return;
 }
@@ -163,18 +131,40 @@ function sendHeart() {
   }
 }
 
+function logMsg(target, context, msg, self) {
+  let time = new Date(Date.now());
+  console.log(
+    `* Message in ${target} from ${
+      context["username"]
+    }: ${msg} [${time.toUTCString()}]`
+  );
+}
+
 // Called every time a message comes in
 function onMessageHandler(target, context, msg, self) {
   if (self) {
     return;
   } // Ignore messages from the bot
   sendFirstFry(target, context, msg, self);
+  logMsg(target, context, msg, self);
   let last_msg_date = 0;
   if (last_bot_msg[target] !== undefined)
     last_msg_date = last_bot_msg[target]["date"];
   if (Date.now() - last_msg_date > min_interval * 1000) {
-    setTimeout(() => replyMsg(target, context, msg, self), 1000);
+    let rd = 0;
+    if (context["username"] === process.env.BOT_USERNAME) rd = reply_delay;
+    setTimeout(() => replyMsg(target, context, msg, self), rd);
   } // Avoids spam even from BOT_USERNAME, default interval is set to 30 s
+
+  // There is no possible way to know if a message has been sent, this code may help
+  /* client
+      .say(target, "message")
+      .then((data) => {})
+      .catch((err) => {
+        console.log(`* Error: ${err}`);
+      });
+   */
+
   updateLastBotMsg(target, context, msg, self);
 }
 

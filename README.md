@@ -2,7 +2,7 @@
 
 ## Overview
 
-Given a list of channels this bot starts sending a :purple_heart: every `N` minutes ~~and replies to `ciao` with `ciao <3`.~~
+Given a list of channels this bot starts sending a <3 every `N` minutes ~~and replies to `ciao` with `ciao <3`.~~
 
 The bot also replies to some keywords.
 
@@ -36,4 +36,4 @@ To start, you’ll need three environment variables:
 
 **Note**: This bot connects to the IRC network as a client and isn't designed to respond over HTTP. If you click "Show Live" you will see a simple "Hello World"
 
-#### Made with :purple_heart: by [m_tte63](https://twitch.tv/m_tte63/)
+#### Made with <3 by [m_tte63](https://twitch.tv/m_tte63/)
