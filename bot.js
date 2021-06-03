@@ -117,7 +117,9 @@ function replyMsg(target, context, msg, self) {
       `cri LuvBlondeR`,
       `cricri <3`,
       `la dolcissima cri <3`,
-      `crise <3`
+      `crise <3`,
+      `ma conosci Mortal Kombat? Kappa`,
+      `criseldia? italiana? TakeNRG`
     ],
     alefry: [
       `serviva qualcuno che parlasse della morfologia del territorio ligure quindi chi meglio di alefry LuvGift`,
